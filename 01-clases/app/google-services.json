@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "605629882022",
+    "project_id": "jlsh-2024-sw-gr2",
+    "storage_bucket": "jlsh-2024-sw-gr2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605629882022:android:b489ea1b120746a9585e67",
+        "android_client_info": {
+          "package_name": "com.example.a2024aswgr2shjl"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYb0SgK1G_uFU-MrV6veS_rsc5OTNmqp0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
