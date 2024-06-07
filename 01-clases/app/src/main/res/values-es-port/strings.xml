@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nombre_app">2024ASWGR2SHJL</string>
+    <string name="saludo">Español Portrait</string>
+    <color name="bgColor">#87CEEB</color>
+    <color name="textColor">#D2B48C</color>
+</resources>

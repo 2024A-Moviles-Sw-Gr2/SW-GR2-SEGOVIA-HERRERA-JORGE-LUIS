@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="nombre_app">2024ASWGR2SHJL</string>
+    <string name="saludo">English Landscape</string>
     <color name="bgColor">#808080</color>
     <color name="textColor">#FF0000</color>
 </resources>
