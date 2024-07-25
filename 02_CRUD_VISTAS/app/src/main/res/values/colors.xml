@@ -1,0 +1,8 @@
+<resources>
+    <color name="backgroundColor">#F5F5F5</color>
+    <color name="primaryTextColor">#333333</color>
+    <color name="hintColor">#888888</color>
+    <color name="buttonTextColor">#FFFFFF</color>
+    <color name="buttonColor">#00796B</color>
+    <color name="white">#FFFFFF</color>
+</resources>
