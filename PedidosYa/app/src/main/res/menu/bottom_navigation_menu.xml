@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/casa"
+        android:title="Inicio" />
+    <item
+        android:id="@+id/navigation_promociones"
+        android:icon="@drawable/ofertas"
+        android:title="Promociones" />
+    <item
+        android:id="@+id/navigation_pedidos"
+        android:icon="@drawable/detalle"
+        android:title="Pedidos" />
+    <item
+        android:id="@+id/navigation_perfil"
+        android:icon="@drawable/perfil"
+        android:title="Mi perfil" />
+</menu>

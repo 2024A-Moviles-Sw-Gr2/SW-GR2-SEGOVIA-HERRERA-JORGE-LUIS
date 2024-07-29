@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Pedidos Ya</string>
+    <string name="item_image">Descripción de la imagen</string>
+    <string name="item_text">Texto del ítem</string>
+    <string name="item_precio">Precio del item</string>
+    <string name="banner_image">Banner Image</string>
+    <string name="banner_hamburger_image">Imagen de Hamburguesa</string>
+    <string name="banner_tropi_image">Imagen de Tropi</string>
+</resources>
