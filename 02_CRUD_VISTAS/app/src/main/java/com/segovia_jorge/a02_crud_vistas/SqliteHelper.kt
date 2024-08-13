@@ -11,23 +11,25 @@ class SqliteHelper(
 
     override fun onCreate(db: SQLiteDatabase?) {
         val crearTablaEstudio = """
-            CREATE TABLE Estudio(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nombre_Estudio VARCHAR(100),
-                empleados_Estudio INTEGER,
-                pais_Estudio VARCHAR(50)
-            );
-        """.trimIndent()
+        CREATE TABLE Estudio(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre_Estudio VARCHAR(100),
+            empleados_Estudio INTEGER,
+            pais_Estudio VARCHAR(50),
+            latitud_Estudio REAL,
+            longitud_Estudio REAL
+        );
+    """.trimIndent()
 
         val crearVideojuego = """
-            CREATE TABLE Videojuego(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nombre_Juego VARCHAR(100),
-                genero_Juego VARCHAR(200),
-                id_Estudio INTEGER,
-                FOREIGN KEY (id_Estudio) REFERENCES Estudio(id) ON DELETE CASCADE
-            );
-        """.trimIndent()
+        CREATE TABLE Videojuego(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre_Juego VARCHAR(100),
+            genero_Juego VARCHAR(200),
+            id_Estudio INTEGER,
+            FOREIGN KEY (id_Estudio) REFERENCES Estudio(id) ON DELETE CASCADE
+        );
+    """.trimIndent()
 
         db?.execSQL(crearTablaEstudio)
         db?.execSQL(crearVideojuego)
@@ -35,28 +37,30 @@ class SqliteHelper(
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {}
 
-    fun obtenerTodosEstudios():ArrayList<EstudioVideojuego> {
-        val lectureDB =readableDatabase
-        val queryScript ="""
-            SELECT * FROM Estudio
-        """.trimIndent()
+    fun obtenerTodosEstudios(): ArrayList<EstudioVideojuego> {
+        val lectureDB = readableDatabase
+        val queryScript = """
+        SELECT * FROM Estudio
+    """.trimIndent()
         val queryResult = lectureDB.rawQuery(
             queryScript,
             emptyArray()
         )
         val response = arrayListOf<EstudioVideojuego>()
 
-        if(queryResult.moveToFirst()) {
+        if (queryResult.moveToFirst()) {
             do {
                 response.add(
                     EstudioVideojuego(
-                        queryResult.getInt(0),
-                        queryResult.getString(1),
-                        queryResult.getInt(2),
-                        queryResult.getString(3)
+                        queryResult.getInt(0), // id
+                        queryResult.getString(1) ?: "", // nombreEstudio
+                        queryResult.getInt(2), // empleadosEstudio
+                        queryResult.getString(3) ?: "", // paisEstudio
+                        queryResult.getDouble(4), // latitudEstudio
+                        queryResult.getDouble(5) // longitudEstudio
                     )
                 )
-            } while(queryResult.moveToNext())
+            } while (queryResult.moveToNext())
         }
         queryResult.close()
         lectureDB.close()
@@ -96,13 +100,17 @@ class SqliteHelper(
     fun crearEstudio(
         nombre_Estudio: String,
         empleados_Estudio: Int,
-        pais_Estudio: String
+        pais_Estudio: String,
+        latitud_Estudio: Double,
+        longitud_Estudio: Double
     ): Boolean {
         val writeDB = writableDatabase
         val valuesToStore = ContentValues()
         valuesToStore.put("nombre_Estudio", nombre_Estudio)
         valuesToStore.put("empleados_Estudio", empleados_Estudio)
         valuesToStore.put("pais_Estudio", pais_Estudio)
+        valuesToStore.put("latitud_Estudio", latitud_Estudio)
+        valuesToStore.put("longitud_Estudio", longitud_Estudio)
 
         val storeResult = writeDB.insert(
             "Estudio",
@@ -112,6 +120,34 @@ class SqliteHelper(
         writeDB.close()
 
         return storeResult.toInt() != -1
+    }
+
+    fun actualizarEstudio(
+        id: Int,
+        nombre_Estudio: String,
+        empleados_Estudio: Int,
+        pais_Estudio: String,
+        latitud_Estudio: Double,
+        longitud_Estudio: Double
+    ): Boolean {
+        val writeDB = writableDatabase
+        val valuesToUpdate = ContentValues()
+        valuesToUpdate.put("nombre_Estudio", nombre_Estudio)
+        valuesToUpdate.put("empleados_Estudio", empleados_Estudio)
+        valuesToUpdate.put("pais_Estudio", pais_Estudio)
+        valuesToUpdate.put("latitud_Estudio", latitud_Estudio)
+        valuesToUpdate.put("longitud_Estudio", longitud_Estudio)
+
+        val parametersUpdateQuery = arrayOf(id.toString())
+        val updateResult = writeDB.update(
+            "Estudio",
+            valuesToUpdate,
+            "id=?",
+            parametersUpdateQuery
+        )
+        writeDB.close()
+
+        return updateResult != -1
     }
 
     fun crearJuego(
@@ -135,29 +171,6 @@ class SqliteHelper(
         return storeResult.toInt() != -1
     }
 
-    fun actualizarEstudio(
-        id: Int,
-        nombre_Estudio: String,
-        empleados_Estudio: Int,
-        pais_Estudio: String
-    ): Boolean {
-        val writeDB = writableDatabase
-        val valuesToUpdate = ContentValues()
-        valuesToUpdate.put("nombre_Estudio", nombre_Estudio)
-        valuesToUpdate.put("empleados_Estudio", empleados_Estudio)
-        valuesToUpdate.put("pais_Estudio", pais_Estudio)
-
-        val parametersUpdateQuery = arrayOf(id.toString())
-        val updateResult = writeDB.update(
-            "Estudio",
-            valuesToUpdate,
-            "id=?",
-            parametersUpdateQuery
-        )
-        writeDB.close()
-
-        return updateResult != -1
-    }
 
     fun actualizarJuego(
         id: Int,
@@ -208,5 +221,6 @@ class SqliteHelper(
 
         return deleteResult != -1
     }
+
 
 }

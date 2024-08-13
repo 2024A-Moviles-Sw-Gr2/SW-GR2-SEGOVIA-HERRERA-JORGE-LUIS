@@ -14,8 +14,8 @@ import androidx.appcompat.app.AlertDialog
 
 class MainActivity : AppCompatActivity() {
 
-    private var estudios:ArrayList<EstudioVideojuego> = arrayListOf()
-    private var adapter:ArrayAdapter<EstudioVideojuego>? = null
+    private var estudios: ArrayList<EstudioVideojuego> = arrayListOf()
+    private var adapter: ArrayAdapter<EstudioVideojuego>? = null
     private var posicion = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +34,13 @@ class MainActivity : AppCompatActivity() {
         adapter!!.notifyDataSetChanged()
 
         val irCrearEstudio = findViewById<Button>(R.id.agregar_Estudio)
-        irCrearEstudio.setOnClickListener{
+        irCrearEstudio.setOnClickListener {
             goToActivity(CrearEditarEstudio::class.java)
+        }
+
+        val botonMapa = findViewById<Button>(R.id.btn_ir_mapa)
+        botonMapa.setOnClickListener {
+            goToActivity(googleMaps::class.java)
         }
 
         registerForContextMenu(lista_Estudios)
@@ -59,15 +64,15 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.editar_Estudio -> {
                 goToActivity(CrearEditarEstudio::class.java, estudios[posicion])
-                return true
+                true
             }
             R.id.borrar_Estudio -> {
                 openDialog(estudios[posicion].id)
-                return true
+                true
             }
             R.id.ver_Juegos -> {
                 goToActivity(ListaVideojuegos::class.java, estudios[posicion])
-                return true
+                true
             }
             else -> super.onContextItemSelected(item)
         }
@@ -78,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         dataToPass: EstudioVideojuego? = null
     ) {
         val intent = Intent(this, activityClass)
-        if(dataToPass != null) {
+        if (dataToPass != null) {
             intent.apply {
                 putExtra("estudioSeleccionado", dataToPass)
             }
@@ -89,9 +94,7 @@ class MainActivity : AppCompatActivity() {
     private fun openDialog(registerIndex: Int) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("¿Eliminar el estudio?")
-        builder.setPositiveButton(
-            "Eliminar"
-        ) { _, _ ->
+        builder.setPositiveButton("Eliminar") { _, _ ->
             DataBase.tables!!.borrarEstudio(registerIndex)
             estudios.clear()
             estudios.addAll(DataBase.tables!!.obtenerTodosEstudios())

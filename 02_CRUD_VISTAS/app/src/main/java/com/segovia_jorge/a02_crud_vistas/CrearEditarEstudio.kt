@@ -13,6 +13,8 @@ class CrearEditarEstudio : AppCompatActivity() {
     private lateinit var nombreEstudio: EditText
     private lateinit var empleadosEstudio: EditText
     private lateinit var paisEstudio: EditText
+    private lateinit var latitudEstudio: EditText
+    private lateinit var longitudEstudio: EditText
     private lateinit var guardarEstudio: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +31,9 @@ class CrearEditarEstudio : AppCompatActivity() {
                     estudioSeleccionado.id,
                     nombreEstudio.text.toString(),
                     empleadosEstudio.text.toString().toInt(),
-                    paisEstudio.text.toString()
+                    paisEstudio.text.toString(),
+                    latitudEstudio.text.toString().toDouble(),
+                    longitudEstudio.text.toString().toDouble()
                 )
                 goToActivity(MainActivity::class.java)
             }
@@ -38,7 +42,9 @@ class CrearEditarEstudio : AppCompatActivity() {
                 DataBase.tables?.crearEstudio(
                     nombreEstudio.text.toString(),
                     empleadosEstudio.text.toString().toInt(),
-                    paisEstudio.text.toString()
+                    paisEstudio.text.toString(),
+                    latitudEstudio.text.toString().toDouble(),
+                    longitudEstudio.text.toString().toDouble()
                 )
                 goToActivity(MainActivity::class.java)
             }
@@ -49,6 +55,8 @@ class CrearEditarEstudio : AppCompatActivity() {
         nombreEstudio = findViewById(R.id.nombre_Estudio)
         empleadosEstudio = findViewById(R.id.empleados_Estudio)
         paisEstudio = findViewById(R.id.pais_Estudio)
+        latitudEstudio = findViewById(R.id.latitud_Estudio)
+        longitudEstudio = findViewById(R.id.longitud_Estudio)
         guardarEstudio = findViewById(R.id.guardar_Estudio)
     }
 
@@ -56,6 +64,8 @@ class CrearEditarEstudio : AppCompatActivity() {
         nombreEstudio.setText(estudio.nombreEstudio)
         empleadosEstudio.setText(estudio.empleadosEstudio.toString())
         paisEstudio.setText(estudio.paisEstudio)
+        latitudEstudio.setText(estudio.latitudEstudio.toString())
+        longitudEstudio.setText(estudio.longitudEstudio.toString())
     }
 
     private inline fun <reified T : Parcelable> getParcelableExtraCompat(key: String): T? {
@@ -71,3 +81,5 @@ class CrearEditarEstudio : AppCompatActivity() {
         startActivity(intent)
     }
 }
+
+

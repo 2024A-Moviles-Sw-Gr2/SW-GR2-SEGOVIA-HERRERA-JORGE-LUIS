@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">02_CRUD_VISTAS</string>
+    <string name="title_activity_google_maps">activity_google_maps</string>
 </resources>
